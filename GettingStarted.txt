@@ -1,7 +1,49 @@
+First install npm and node:
+sudo apt-get install node
+
+Install Ruby:
+sudo apt-get install ruby-full build-essential
+
+Install Ruby Gems:
+sudo apt-get install rubygems
+
+Install yo and the generators:
+
 npm install -g yo
 npm install -g generator-webapp
 
 npm install -g generator-angular
+
+Install grunt-contrib system wide
+
 sudo npm install grunt-contrib -g
 
+Install compass:
 sudo gem install compass
+
+
+Log into the git server (192.241.170.37)
+Add your ssh key to authorized_keys (or email me it encrypted
+and I can add it for you manually)
+Once in the server copy and paste the contents of your ~/.ssh/id_rsa.pub (from your local workstation) into ~/.ssh/authorized_keys on 192.241.170.37
+
+This will enable ssh access without logon
+
+Once you have done that you can now copy the repository wiht this command:
+
+git clone git@192.241.170.37:/opt/git/workspace.git
+
+Once the command has finished as a sanity check run the server to make sure you are good to go:
+cd to the directory that was created (workspace) and type "grunt server"
+
+That should open a browser window with our application.
+
+Git workflow
+When you do commits (git commit -a 'Something Something Darkside!') you will actually be committing to your local repository.  If you want to commit that to all our repositories then commit to the server like this:
+git push origin master
+This will push all your changes in the current folder (and below the current folder) up to the server.
+
+IF you wish to pull what someone else is working on, make sure they have committed it to the server.  Then you can pull the server folder with the pull command:
+
+git pull origin master.
+

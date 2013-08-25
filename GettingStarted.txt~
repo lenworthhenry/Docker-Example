@@ -1,0 +1,7 @@
+npm install -g yo
+npm install -g generator-webapp
+
+npm install -g generator-angular
+sudo npm install grunt-contrib -g
+
+sudo gem install compass

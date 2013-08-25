@@ -7,6 +7,10 @@ angular.module('workspaceApp', [])
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/u', {
+        templateUrl: 'views/u.html',
+        controller: 'UCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
