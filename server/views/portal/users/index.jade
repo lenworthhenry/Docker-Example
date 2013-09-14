@@ -1,0 +1,9 @@
+extends ../layout
+
+
+block content
+  h1 Users
+  p My goal is to be as clear as mud!!!
+  ul#users
+    - each user in users
+      li= user.username
