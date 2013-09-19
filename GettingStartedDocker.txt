@@ -1,0 +1,11 @@
+Getting started with Docker
+
+1.  Install Docker (http://docs.docker.io/en/latest/installation/ubuntulinux/)
+2.  Grab the base ubuntulinux and run it to test Docker
+sudo docker run -i -t ubuntu /bin/bash
+# type exit to exit the image once you verify it worked
+3.  Get the latest code from Git that contains a Dockerfile for our project.
+4.  Create an image from the docker file
+sudo docker build -t (your username)/ubuntu-node-hello .
+5.  Verify the image exists:
+sudo docker images
