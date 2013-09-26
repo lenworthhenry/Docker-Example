@@ -22,7 +22,7 @@ RUN	add-apt-repository ppa:chris-lea/node.js
 RUN apt-get update
 
 #Install node.js
-RUN	apt-get install -y nodejs=0.10.18-1chl1~precise1
+RUN	apt-get install -y nodejs
 
 #Install yo and the generators:
 RUN	npm install -g yo
@@ -42,15 +42,42 @@ RUN	echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen
 RUN	apt-get update
 RUN	apt-get install -y mongodb-10gen
 
+#Create the MongoDB data directory
+RUN	mkdir -p /data/db
+
+#Install redis
+RUN apt-get install redis-server
+
+
 #Bundle app source
 ADD .	/src
 
 # Install app dependencies
 RUN cd /src/server; npm install
+RUN cd /src; npm install open
+RUN cd /src; npm install
+
 
 
 #Open up service port from VM
 EXPOSE  3000
 
+#Open up mongo port from VM
+EXPOSE	27017
+ENTRYPOINT ["usr/bin/mongod"]
+
+#Open up redis port
+EXPOSE 6379
+
+#Open up port 9000
+EXPOSE 9000
+
 #Run the service
 CMD ["node", "/src/server/app.js"]
+
+#Build the app
+RUN cd /src; grunt build
+
+
+#Run the app
+#RUN cd /src; grunt connect:dist:keepalive &

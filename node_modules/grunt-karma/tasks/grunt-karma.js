@@ -9,7 +9,6 @@
 var runner = require('karma').runner;
 var server = require('karma').server;
 var path = require('path');
-var optimist = require('optimist');
 
 module.exports = function(grunt) {
   var _ = grunt.util._;
@@ -17,26 +16,21 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('karma', 'run karma.', function() {
     var done = this.async();
     var options = this.options({
-      background: false,
-      // allow passing of cli args on as client args, for example --grep=x
-      clientArgs: require('optimist').argv,
-      client: { args: require('optimist').argv }
+      background: false
     });
     var data = this.data;
     //merge options onto data, with data taking precedence
     data = _.merge(options, data);
+    data.configFile = path.resolve(data.configFile);
 
     if (data.configFile) {
-      data.configFile = path.resolve(data.configFile);
       data.configFile = grunt.template.process(data.configFile);
     }
-
     //support `karma run`, useful for grunt watch
     if (this.flags.run){
       runner.run(data, done);
       return;
     }
-    
     //allow karma to be run in the background so it doesn't block grunt
     if (data.background){
       grunt.util.spawn({cmd: 'node', args: [path.join(__dirname, '..', 'lib', 'background.js'), JSON.stringify(data)]}, function(){});
