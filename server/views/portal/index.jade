@@ -1,7 +1,15 @@
 extends layout
 
-
 block content
-  h1= title
-  p My goal is to be as clear as mud!!!
-  p Welcome to #{title}
+  div.top
+    form.form-horizontal(method="post", id="loginForm", action="/login")
+      label Username
+      input.span3(id="username", type="text", name="User", placeholder="Enter your username")
+      label Password
+      input.span3(id="password", type="password", name="Password")
+      input.btn(type="submit", value="Log In")
+  div.container
+    div.content
+      Welcome to the LawNovo Portal
+
+  div.footer

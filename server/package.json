@@ -6,7 +6,14 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "3.3.8",
-    "jade": "*"
+    "express": "3.x",
+    "jade": "*",
+     "express": "3.x.x",
+    "connect-flash": "0.1.x",
+    "passport": ">= 0.0.0",
+    "passport-local": ">= 0.0.0",
+    "mongodb": ">= 0.0.0",
+    "mongoose": ">= 0.0.0",
+    "bcrypt": ">= 0.0.0"
   }
 }

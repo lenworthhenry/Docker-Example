@@ -1,7 +1,12 @@
+
 module.exports = function(app)
 {
-  app.get('/', function(req, res){
-    res.render('portal/index', {title:'User Service'});
+
+  var passport=require('../auth/passport');
+
+    app.get('/portal/account', passport.ensureAuthenticated, function(req, res){
+
+ res.render('portal/account', {user : req.user});
   })
 
 };

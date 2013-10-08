@@ -11,6 +11,18 @@ angular.module('workspaceApp', [])
         templateUrl: 'views/u.html',
         controller: 'UCtrl'
       })
+      .when('/login', {
+        templateUrl: 'views/login.html',
+        controller: 'LoginCtrl'
+      })
+      .when('/logout', {
+        templateUrl: 'views/logout.html',
+        controller: 'LogoutCtrl'
+      })
+      .when('/loggedin', {
+        templateUrl: 'views/loggedin.html',
+        controller: 'LoggedinCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
