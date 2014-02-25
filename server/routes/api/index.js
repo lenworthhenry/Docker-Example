@@ -1,7 +1,9 @@
 module.exports = function(app)
 {
   var mongodb = require('mongodb')
-  ,mongoose = require('mongoose');
+  ,mongoose = require('mongoose')
+   ,passport=require('../auth/passport');
+
 
   mongoose.connect('mongodb://localhost/workspace')
 
@@ -27,7 +29,7 @@ module.exports = function(app)
 
 
 
- app.get('/api/workspaces', function(req, res){
+ app.get('/api/workspaces', passport.ensureAuthenticated, function(req, res){
     req.workspace.find().limit(10).toArray(function(error, results){
       if(error) return next(error)
       res.send(results)

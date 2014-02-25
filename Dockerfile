@@ -1,6 +1,6 @@
-# DOCKER-VERSION 0.5.3
-FROM ubuntu
-MAINTAINER Lenworth Henry <lhenry@lawnovo.com>
+# DOCKER-VERSION 0.8.1
+FROM boxcar/raring
+MAINTAINER Lenworth Henry <mboom@nefertitiware.com>
 
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
 RUN apt-get update
@@ -14,7 +14,7 @@ RUN	apt-get install -y ruby-full
 RUN	apt-get install -y rubygems
 
 #Not in default build but needed
-RUN	apt-get install -y python-software-properties python g++ make software-properties-common
+RUN	apt-get install -y python-software-properties python g++ make #software-properties-common
 
 #Add apt Repository for Node
 RUN	add-apt-repository ppa:chris-lea/node.js
@@ -73,10 +73,10 @@ EXPOSE 6379
 EXPOSE 9000
 
 #Run the service
-CMD ["node", "/src/server/app.js"]
+CMD ["/usr/bin/node", "/src/server/app.js"]
 
 #Build the app
-RUN cd /src; grunt build
+#RUN cd /src; grunt build
 
 
 #Run the app
