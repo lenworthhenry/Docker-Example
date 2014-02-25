@@ -42,29 +42,32 @@ RUN	echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen
 RUN	apt-get update
 RUN	apt-get install -y mongodb-10gen
 
+
 #Create the MongoDB data directory
 RUN	mkdir -p /data/db
 
 #Install redis
 RUN apt-get install redis-server
 
+#INSTALL supervisor
+RUN apt-get -y install supervisor
 
 #Bundle app source
-ADD .	/src
+ADD . /src
 
 # Install app dependencies
 RUN cd /src/server; npm install
 RUN cd /src; npm install open
 RUN cd /src; npm install
 
-
+#Build app
+RUN cd /src; grunt build
 
 #Open up service port from VM
 EXPOSE  3000
 
 #Open up mongo port from VM
 EXPOSE	27017
-ENTRYPOINT ["usr/bin/mongod"]
 
 #Open up redis port
 EXPOSE 6379
@@ -72,12 +75,7 @@ EXPOSE 6379
 #Open up port 9000
 EXPOSE 9000
 
-#Run the service
-CMD ["/usr/bin/node", "/src/server/app.js"]
-
-#Build the app
-#RUN cd /src; grunt build
-
-
-#Run the app
-#RUN cd /src; grunt connect:dist:keepalive &
+#Fire it up, Fire it up, Fire it up
+RUN mkdir -p /var/log/supervisor
+ADD ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+cmd ["supervisord", "-n"]
