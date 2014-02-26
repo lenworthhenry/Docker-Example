@@ -10,7 +10,7 @@ module.exports = function(app)
   , SALT_WORK_FACTOR = 10;
 
 
-  mongoose.connect('mongodb://localhost/workspace')
+  mongoose.connect('mongodb://'+process.env.DB_PORT_27017_TCP_ADDR+':'+process.env.DB_PORT_27017_TCP_PORT+'/workspace')
 
   var db = mongoose.connection;
 
@@ -75,7 +75,6 @@ cb(null, isMatch);
 var User = mongoose.model('User', userSchema);
 
 
-/*
 // Seed a user
  var user = new User({ username: 'lhenry', email: 'lhenry@lawnovo.com', password: 'yardie' });
 user.save(function(err) {
@@ -85,7 +84,7 @@ user.save(function(err) {
     console.log('user: ' + user.username + " saved.");
   }
 });
-*/
+
 
 // Passport session setup.
 // To support persistent login sessions, Passport needs to be able to

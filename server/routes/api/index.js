@@ -5,8 +5,7 @@ module.exports = function(app)
    ,passport=require('../auth/passport');
 
 
-  mongoose.connect('mongodb://localhost/workspace')
-
+  mongoose.connect('mongodb://'+process.env.DB_PORT_27017_TCP_ADDR+':'+process.env.DB_PORT_27017_TCP_PORT+'/workspace')
   var db = mongoose.connection;
 
   db.on('error', console.error.bind(console, 'connection error'))

@@ -36,24 +36,13 @@ RUN	npm install grunt-contrib -g
 RUN	gem install compass
 
 
-#Install mongodb
-RUN	apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
-RUN	echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | tee /etc/apt/sources.list.d/mongodb.list
-RUN	apt-get update
-RUN	apt-get install -y mongodb-10gen
-
-
-#Create the MongoDB data directory
-RUN	mkdir -p /data/db
-
-#Install redis
-RUN apt-get install redis-server
-
 #INSTALL supervisor
-RUN apt-get -y install supervisor
+#RUN apt-get -y install supervisor
 
 #Bundle app source
 ADD . /src
+ADD start.sh /src/start.sh
+RUN chmod 755 /src/start.sh
 
 # Install app dependencies
 RUN cd /src/server; npm install
@@ -66,16 +55,9 @@ RUN cd /src; grunt build
 #Open up service port from VM
 EXPOSE  3000
 
-#Open up mongo port from VM
-EXPOSE	27017
-
-#Open up redis port
-EXPOSE 6379
-
-#Open up port 9000
-EXPOSE 9000
 
 #Fire it up, Fire it up, Fire it up
-RUN mkdir -p /var/log/supervisor
-ADD ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-cmd ["supervisord", "-n"]
+#RUN mkdir -p /var/log/supervisor
+#ADD ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+#cmd ["supervisord", "-n"]
+cmd ["node" , "/src/server/app.js"]
